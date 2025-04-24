@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/*
+ * Optional CSS
+ * -----------------------------------
+ */
+
+/* This sets a different background and item background in light mode on ios */
+
+html{
+  --ion-font-family: 'Roboto', sans-serif;
+}
+
+.ios body {
+  --ion-background-color: #ffffff;
+  --ion-toolbar-background: var(--ion-background-color);
+  --ion-item-background: #fff;
+}
+
+/* This sets a different background and item background in light mode on md */
+.md body {
+  --ion-background-color: #ffffff;
+  --ion-toolbar-background: var(--ion-background-color);
+  --ion-item-background: #fff;
+}
+
+/* This is added for the flashing that happens when toggling between themes */
+ion-item {
+  --transition: none;
+}
+
+ion-button{
+  --border-radius: 12px;
+  --box-shadow: none;
+  text-transform: capitalize;
+  font-size: 14px;
+  height: 44px;
+}
+
+
+button.alert-button.alert-button-confirm {
+  color: var(--ion-color-danger-shade);
+}
+
+.bounce-in{
+  animation: bounce 0.5s ease 1;
+}
+
+@keyframes bounce{
+  0%{
+    scale: 0.2;
+  }
+  75%{
+    scale: 1.2;
+  }
+  100%{
+    scale: 1;
+  }
+}
+
+
+.fade-in {
+  animation: fadeIn 0.5s ease 1;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    visibility: hidden;
+  } 
+  100% {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.fade-out{
+  animation: fadeOut 0.2s ease 1;
+  visibility: hidden
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+    visibility: visible;
+  } 
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}

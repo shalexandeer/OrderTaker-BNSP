@@ -1,0 +1,9 @@
+.searchCancel{
+  display: none;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.searchCancel.show{
+  display: flex;
+  opacity: 1;
+}
