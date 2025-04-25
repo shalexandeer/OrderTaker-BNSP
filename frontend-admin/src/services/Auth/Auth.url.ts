@@ -4,7 +4,7 @@ import { BASE_URL } from "./../url";
 import axiosInstance from "../axiosInstance";
 
 function login(
-  username: string,
+  email: string,
   password: string,
 ): Promise<AxiosResponse<AuthResponse>> {
   const url = `${BASE_URL}/api/admin/login`;
@@ -12,7 +12,7 @@ function login(
 
   return axiosInstance.post(
     url,
-    { username, password },
+    { email, password },
     { headers: getBasicHeader(token) },
   );
 }

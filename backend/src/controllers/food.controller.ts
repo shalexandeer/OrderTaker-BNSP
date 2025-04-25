@@ -5,33 +5,27 @@ import { BackendError } from '@/utils/errors';
 
 export const handleGetAllFoods = createHandler(
   async (req, res) => {
-    const params = req.query;
-    const foods = await getAllFoods(params.categoryId as string | null);
+    const { page, pageSize, orderBy, isAscending, querySearch, categoryId } = req.query;
 
-    res.status(200).json({
-      success: true,
-      message: 'Foods fetched successfully',
-      data: foods,
-    });
-  },
-);
-
-export const handleGetFoodBySearch = createHandler(
-  async (req, res) => {
-    const { search } = req.query;
-
-    if (!search) {
-      throw new BackendError('BAD_REQUEST', {
-        message: 'Missing search query',
+    if (!page || !pageSize) {
+      res.status(400).json({
+        success: false,
+        message: 'Missing required parameters: page and pageSize',
       });
     }
-
-    const foods = await getFoodsBySearch(search);
+    const foods = await getAllFoods({
+      page: Number(page),
+      pageSize: Number(pageSize),
+      orderBy: orderBy as string,
+      isAscending: isAscending === 'true',
+      querySearch: querySearch as string,
+    }, categoryId as string | null);
 
     res.status(200).json({
       success: true,
       message: 'Foods fetched successfully',
-      data: foods,
+      data: foods.data,
+      pagination: foods.pagination,
     });
   },
 );
@@ -63,6 +57,15 @@ export const handleGetFoodById = createHandler(
 );
 
 export const handleGetFoodsByCategory = createHandler(async (req, res) => {
+  const { page, pageSize, orderBy, isAscending, querySearch } = req.query;
+
+  if (!page || !pageSize) {
+    res.status(400).json({
+      success: false,
+      message: 'Missing required parameters: page and pageSize',
+    });
+  }
+
   const { categoryId } = req.params;
 
   if (!categoryId) {
@@ -71,7 +74,13 @@ export const handleGetFoodsByCategory = createHandler(async (req, res) => {
     });
   }
 
-  const foods = await getFoodsByCategory(categoryId);
+  const foods = await getFoodsByCategory({
+    page: Number(page),
+    pageSize: Number(pageSize),
+    orderBy: orderBy as string,
+    isAscending: isAscending === 'true',
+    querySearch: querySearch as string,
+  }, categoryId);
 
   if (!foods) {
     throw new BackendError('NOT_FOUND', {
@@ -82,7 +91,8 @@ export const handleGetFoodsByCategory = createHandler(async (req, res) => {
   res.status(200).json({
     success: true,
     message: 'Foods by category fetched successfully',
-    data: foods,
+    data: foods.data,
+    pagination: foods.pagination,
   });
 });
 

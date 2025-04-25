@@ -10,8 +10,8 @@ export function useLogin(
     AxiosError,
     LoginBody
   >({
-    mutationFn: async ({ username, password }: LoginBody) => {
-      const response = await AuthServices.login(username, password);
+    mutationFn: async ({ email, password }: LoginBody) => {
+      const response = await AuthServices.login(email, password);
       return response?.data;
     },
     onSuccess: options?.onSuccess,

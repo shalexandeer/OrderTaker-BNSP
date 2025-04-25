@@ -29,64 +29,64 @@ import {
   IconTimelineEventPlus,
   IconBarrierBlock,
   IconDeviceGamepad2,
-} from '@tabler/icons-react'
+} from "@tabler/icons-react";
 
 export interface NavLink {
-  title: string
-  label?: string
-  href: string
-  icon: JSX.Element
+  title: string;
+  label?: string;
+  href: string;
+  icon: JSX.Element;
 }
 
 export interface SideLink extends NavLink {
-  sub?: NavLink[]
+  sub?: NavLink[];
 }
 
 export const sidelinks: SideLink[] = [
   {
-    title: 'Dashboard',
-    label: '',
-    href: '/',
+    title: "Dashboard",
+    label: "",
+    href: "/",
     icon: <IconLayoutDashboard size={18} />,
   },
   {
-    title: 'Referrals',
-    href: '/referrals',
+    title: "Manajemen Meja",
+    href: "/meja",
     icon: <IconDiscountCheck size={18} />,
   },
   {
-    title: 'Vouchers',
-    href: '/vouchers',
+    title: "Vouchers",
+    href: "/vouchers",
     icon: <IconDiscount2 size={18} />,
   },
   {
-    title: 'Users',
-    label: '',
-    href: '/users',
+    title: "Users",
+    label: "",
+    href: "/users",
     icon: <IconUsers size={18} />,
   },
   {
-    title: 'Events',
-    label: '',
-    href: '/events',
+    title: "Events",
+    label: "",
+    href: "/events",
     icon: <IconTimelineEventPlus size={18} />,
   },
   {
-    title: 'Item Mall',
-    label: '',
-    href: '/shop',
+    title: "Item Mall",
+    label: "",
+    href: "/shop",
     icon: <IconBuildingStore size={18} />,
   },
   {
-    title: 'Blocked Username',
-    label: '',
-    href: '/blocked-username',
+    title: "Blocked Username",
+    label: "",
+    href: "/blocked-username",
     icon: <IconBarrierBlock size={18} />,
   },
   {
-    title: 'Game Client',
-    label: '',
-    href: '/game-client',
+    title: "Game Client",
+    label: "",
+    href: "/game-client",
     icon: <IconDeviceGamepad2 size={18} />,
   },
   //   {
@@ -209,4 +209,4 @@ export const sidelinks: SideLink[] = [
   //   href: '/settings',
   //   icon: <IconSettings size={18} />,
   // },
-]
+];

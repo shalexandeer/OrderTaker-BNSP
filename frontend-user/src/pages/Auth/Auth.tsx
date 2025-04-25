@@ -11,7 +11,7 @@ import { RootState, useTypedDispatch, useTypedSelector } from "../../stores";
 import { useParams } from "react-router";
 import { setIds, setMejaData, setRestaurantProfile } from "../../stores/user";
 import { useGetRestaurantProfile } from "../../services/hotel/hotel.query";
-import { useGetMejaById } from "../../services/foods copy/meja.query";
+import { useGetMejaById } from "../../services/meja/meja.query";
 
 const Auth = () => {
   const [isVisible, setIsVisible] = useState<boolean>(true);

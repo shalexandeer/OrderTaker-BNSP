@@ -11,11 +11,12 @@ import { handleAddUser, handleDeleteUser, handleGetUser, handleUpdateUser, handl
 import { authenticate } from './middlewares/auth';
 import { handleAddCategory, handleDeleteCategory, handleGetCategories, handleGetCategoryById, handleUpdateCategory } from './controllers/category.controller';
 import { handleAddRestaurant, handleDeleteRestaurant, handleGetRestaurant, handleGetRestaurantById, handleUpdateRestaurant } from './controllers/restaurant.controller';
-import { handleAddFood, handleDeleteFood, handleGetAllFoods, handleGetFoodById, handleGetFoodBySearch, handleGetFoodsByCategory, handleUpdateFood } from './controllers/food.controller';
+import { handleAddFood, handleDeleteFood, handleGetAllFoods, handleGetFoodById, handleGetFoodsByCategory, handleUpdateFood } from './controllers/food.controller';
 import { handleAddMeja, handleDeleteMeja, handleGetMeja, handleGetMejaById, handleUpdateMeja } from './controllers/meja.controller';
-import { handleAddOrder, handleDeleteOrder, handleGetOrderById, handleGetOrders } from './controllers/order.controller';
+import { handleAddOrder, handleDeleteOrder, handleGetOrderById, handleGetOrders, handleUpdateStatus } from './controllers/order.controller';
 import { handleAddOrderItem, handleDeleteOrderItem, handleGetOrderItems } from './controllers/orderItems.controller';
 import { handleAddAdditional, handleDeleteAdditional, handleGetAdditionalByFoodId, handleGetAdditionalById, handleGetAdditionals, handleUpdateAdditional } from './controllers/additional.controller';
+import { upload } from './middlewares/upload';
 import { errorHandler, handle404Error } from '@/utils/errors';
 
 const { PORT } = process.env;
@@ -51,7 +52,7 @@ app.get('/healthcheck', (_req, res) => {
 // users route
 app.get('/api/user/', authenticate(), handleGetUser);
 app.post('/api/user/create', handleAddUser);
-app.post('/api/user/login', handleUserLogin);
+app.post('/api/admin/login', handleUserLogin);
 app.delete('/api/user/remove', authenticate(), handleDeleteUser);
 app.put('/api/user/update', authenticate(), handleUpdateUser);
 
@@ -64,12 +65,11 @@ app.delete('/api/categories/:id', authenticate(), handleDeleteCategory);
 
 // foods route
 app.get('/api/foods', handleGetAllFoods);
-app.get('/api/foods/search', handleGetFoodBySearch);
 app.get('/api/foods/category/:categoryId', handleGetFoodsByCategory);
 app.get('/api/foods/:id', handleGetFoodById);
 app.post('/api/foods', authenticate(), handleAddFood);
-app.put('/api/food/:id', authenticate(), handleUpdateFood);
-app.delete('/api/food/:id', authenticate(), handleDeleteFood);
+app.put('/api/foods/:id', authenticate(), handleUpdateFood);
+app.delete('/api/foods/:id', authenticate(), handleDeleteFood);
 
 // restaurant route
 app.get('/api/restaurant', handleGetRestaurant);
@@ -88,6 +88,7 @@ app.delete('/api/meja/:id', authenticate(), handleDeleteMeja);
 // orders route
 app.get('/api/admin/orders', authenticate(), handleGetOrders);
 app.get('/api/admin/orders/:id', authenticate(), handleGetOrderById);
+app.put('/api/admin/orders/:id', authenticate(), handleUpdateStatus);
 app.post('/api/orders', handleAddOrder);
 app.delete('/api/admin/orders/:id', authenticate(), handleDeleteOrder);
 
@@ -103,6 +104,21 @@ app.get('/api/foods/:foodId/additionals', handleGetAdditionalByFoodId);
 app.post('/api/admin/additionals', authenticate(), handleAddAdditional);
 app.put('/api/admin/additionals/:id', authenticate(), handleUpdateAdditional);
 app.delete('/api/admin/additionals/:id', authenticate(), handleDeleteAdditional);
+
+// Serve static files from the uploads directory
+app.use('/uploads', express.static('src/utils/uploads'));
+
+app.post(
+  '/api/upload',
+  authenticate(),
+  upload.single('image'),
+  (req, res) => {
+    if (!req.file)
+      return res.status(400).json({ error: 'No file uploaded' });
+
+    res.json({ url: `/files/${req.file.filename}` });
+  },
+);
 
 // app.use('/api', routes);
 app.all('*', handle404Error);

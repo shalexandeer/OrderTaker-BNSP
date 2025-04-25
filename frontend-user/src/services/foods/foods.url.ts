@@ -4,7 +4,11 @@ import axiosInstance from "../axiosInstance";
 const getFoods = (params: { categoryId: string | null }) => {
   const url = `${BASE_URL}/foods`;
   return axiosInstance.get(url, {
-    params,
+    params: {
+      ...params,
+      page: 1,
+      pageSize: 100,
+    },
   });
 };
 

@@ -1,165 +1,173 @@
-import { createBrowserRouter } from 'react-router-dom'
-import GeneralError from './pages/errors/general-error'
-import NotFoundError from './pages/errors/not-found-error'
-import MaintenanceError from './pages/errors/maintenance-error'
-import UnauthorisedError from './pages/errors/unauthorised-error.tsx'
+import { createBrowserRouter } from "react-router-dom";
+import GeneralError from "./pages/errors/general-error";
+import NotFoundError from "./pages/errors/not-found-error";
+import MaintenanceError from "./pages/errors/maintenance-error";
+import UnauthorisedError from "./pages/errors/unauthorised-error.tsx";
 
 const router = createBrowserRouter([
   {
-    path: '/sign-in',
+    path: "/sign-in",
     lazy: async () => ({
-      Component: (await import('./pages/auth/sign-in.tsx')).default,
+      Component: (await import("./pages/auth/sign-in.tsx")).default,
     }),
   },
   {
-    path: '/sign-up',
+    path: "/sign-up",
     lazy: async () => ({
-      Component: (await import('./pages/auth/sign-up')).default,
+      Component: (await import("./pages/auth/sign-up")).default,
     }),
   },
   {
-    path: '/forgot-password',
+    path: "/forgot-password",
     lazy: async () => ({
-      Component: (await import('./pages/auth/forgot-password')).default,
+      Component: (await import("./pages/auth/forgot-password")).default,
     }),
   },
   {
-    path: '/otp',
+    path: "/otp",
     lazy: async () => ({
-      Component: (await import('./pages/auth/otp')).default,
+      Component: (await import("./pages/auth/otp")).default,
     }),
   },
   {
-    path: '/',
+    path: "/",
     lazy: async () => {
-      const AuthGuard = await import('./provider/AuthGuard')
-      return { Component: AuthGuard.default }
+      const AuthGuard = await import("./provider/AuthGuard");
+      return { Component: AuthGuard.default };
     },
     errorElement: <GeneralError />,
     children: [
       {
         index: true,
         lazy: async () => ({
-          Component: (await import('./pages/dashboard')).default,
+          Component: (await import("./pages/dashboard")).default,
         }),
       },
       {
-        path: 'referrals',
+        path: "referrals",
         lazy: async () => ({
-          Component: (await import('@/pages/referral')).default,
+          Component: (await import("@/pages/referral")).default,
         }),
       },
       {
-        path: 'events',
+        path: "meja",
         lazy: async () => ({
-          Component: (await import('@/pages/events')).default,
+          Component: (await import("@/pages/meja")).default,
         }),
       },
       {
-        path: 'events/add',
+        path: "events",
         lazy: async () => ({
-          Component: (await import('@/pages/events/pages/EventAdd.tsx')).default,
+          Component: (await import("@/pages/events")).default,
         }),
       },
       {
-        path: 'events/edit/:id',
+        path: "events/add",
         lazy: async () => ({
-          Component: (await import('@/pages/events/pages/EventEdit.tsx')).default,
+          Component: (await import("@/pages/events/pages/EventAdd.tsx"))
+            .default,
         }),
       },
       {
-        path: 'vouchers',
+        path: "events/edit/:id",
         lazy: async () => ({
-          Component: (await import('@/pages/voucher')).default,
+          Component: (await import("@/pages/events/pages/EventEdit.tsx"))
+            .default,
         }),
       },
       {
-        path: 'chats',
+        path: "vouchers",
         lazy: async () => ({
-          Component: (await import('@/pages/chats')).default,
+          Component: (await import("@/pages/voucher")).default,
         }),
       },
       {
-        path: 'shop',
+        path: "chats",
         lazy: async () => ({
-          Component: (await import('@/pages/shop')).default,
+          Component: (await import("@/pages/chats")).default,
         }),
       },
       {
-        path: 'users',
+        path: "shop",
         lazy: async () => ({
-          Component: (await import('@/pages/users')).default,
+          Component: (await import("@/pages/shop")).default,
         }),
       },
       {
-        path: 'blocked-username',
+        path: "users",
         lazy: async () => ({
-          Component: (await import('@/pages/blocked-username')).default,
+          Component: (await import("@/pages/users")).default,
         }),
       },
       {
-        path: 'game-client',
+        path: "blocked-username",
         lazy: async () => ({
-          Component: (await import('@/pages/client-url')).default,
+          Component: (await import("@/pages/blocked-username")).default,
         }),
       },
       {
-        path: 'analysis',
+        path: "game-client",
         lazy: async () => ({
-          Component: (await import('@/components/coming-soon')).default,
+          Component: (await import("@/pages/client-url")).default,
         }),
       },
       {
-        path: 'extra-components',
+        path: "analysis",
         lazy: async () => ({
-          Component: (await import('@/pages/extra-components')).default,
+          Component: (await import("@/components/coming-soon")).default,
         }),
       },
       {
-        path: 'settings',
+        path: "extra-components",
         lazy: async () => ({
-          Component: (await import('./pages/settings')).default,
+          Component: (await import("@/pages/extra-components")).default,
+        }),
+      },
+      {
+        path: "settings",
+        lazy: async () => ({
+          Component: (await import("./pages/settings")).default,
         }),
         errorElement: <GeneralError />,
         children: [
           {
             index: true,
             lazy: async () => ({
-              Component: (await import('./pages/settings/profile')).default,
+              Component: (await import("./pages/settings/profile")).default,
             }),
           },
           {
-            path: 'account',
+            path: "account",
             lazy: async () => ({
-              Component: (await import('./pages/settings/account')).default,
+              Component: (await import("./pages/settings/account")).default,
             }),
           },
           {
-            path: 'appearance',
+            path: "appearance",
             lazy: async () => ({
-              Component: (await import('./pages/settings/appearance')).default,
+              Component: (await import("./pages/settings/appearance")).default,
             }),
           },
           {
-            path: 'notifications',
+            path: "notifications",
             lazy: async () => ({
-              Component: (await import('./pages/settings/notifications'))
+              Component: (await import("./pages/settings/notifications"))
                 .default,
             }),
           },
           {
-            path: 'display',
+            path: "display",
             lazy: async () => ({
-              Component: (await import('./pages/settings/display')).default,
+              Component: (await import("./pages/settings/display")).default,
             }),
           },
           {
-            path: 'error-example',
+            path: "error-example",
             lazy: async () => ({
-              Component: (await import('./pages/settings/error-example'))
+              Component: (await import("./pages/settings/error-example"))
                 .default,
             }),
-            errorElement: <GeneralError className='h-[50svh]' minimal />,
+            errorElement: <GeneralError className="h-[50svh]" minimal />,
           },
         ],
       },
@@ -167,13 +175,13 @@ const router = createBrowserRouter([
   },
 
   // Error routes
-  { path: '/500', Component: GeneralError },
-  { path: '/404', Component: NotFoundError },
-  { path: '/503', Component: MaintenanceError },
-  { path: '/401', Component: UnauthorisedError },
+  { path: "/500", Component: GeneralError },
+  { path: "/404", Component: NotFoundError },
+  { path: "/503", Component: MaintenanceError },
+  { path: "/401", Component: UnauthorisedError },
 
   // Fallback 404 route
-  { path: '*', Component: NotFoundError },
-])
+  { path: "*", Component: NotFoundError },
+]);
 
-export default router
+export default router;

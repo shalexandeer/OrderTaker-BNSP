@@ -18,9 +18,7 @@ export const foods = pgTable('foods', {
   updatedAt: timestamp('updated_at').notNull().defaultNow(),
 });
 
-export const selectFoodSchema = createSelectSchema(foods, {
-  img: schema => schema.img.url(),
-});
+export const selectFoodSchema = createSelectSchema(foods);
 
 export const addFoodSchema = z.object({
   body: selectFoodSchema.pick({

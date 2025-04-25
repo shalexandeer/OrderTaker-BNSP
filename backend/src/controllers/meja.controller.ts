@@ -5,13 +5,37 @@ import { BackendError } from '@/utils/errors';
 
 export const handleGetMeja = createHandler(
   async (req, res) => {
-    const tables = await getAllMeja();
+    try {
+      const { page, pageSize, orderBy, isAscending, querySearch } = req.query;
 
-    res.status(200).json({
-      success: true,
-      message: 'Tables fetched successfully',
-      data: tables,
-    });
+      if (!page || !pageSize) {
+        res.status(400).json({
+          success: false,
+          message: 'Missing required parameters: page and pageSize',
+        });
+      }
+
+      const tables = await getAllMeja({
+        page: Number(page),
+        pageSize: Number(pageSize),
+        orderBy: orderBy as string,
+        isAscending: isAscending === 'true',
+        querySearch: querySearch as string,
+      });
+      res.status(200).json({
+        success: true,
+        message: 'Tables fetched successfully',
+        data: tables.data,
+        pagination: tables.pagination,
+      });
+    }
+    catch (error) {
+      console.error('Error fetching tables:', error);
+      res.status(500).json({
+        success: false,
+        message: 'Internal server error',
+      });
+    }
   },
 );
 
@@ -44,8 +68,8 @@ export const handleGetMejaById = createHandler(
 export const handleAddMeja = createHandler(addMejaSchema, async (req, res) => {
   const { number, capacity, status, location } = req.body;
 
-  const existingTables = await getAllMeja();
-  const isNumberExist = existingTables.some(table => table.number === number);
+  const existingTables = await getAllMeja({});
+  const isNumberExist = existingTables.data.some(table => table.number === number);
 
   if (isNumberExist) {
     throw new BackendError('CONFLICT', {

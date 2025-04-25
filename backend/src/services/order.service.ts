@@ -1,4 +1,4 @@
-import { eq, inArray } from 'drizzle-orm';
+import { count, eq, inArray } from 'drizzle-orm';
 import type { NewOrder, UpdateOrder, addOrderSchema } from './../schema/order';
 import { type Order, orders } from '@/schema/order';
 import { db } from '@/utils/db';
@@ -8,15 +8,41 @@ import { orderItems } from '@/schema/orderItem';
 import { additional } from '@/schema/additional';
 import { BackendError } from '@/utils/errors';
 
-export async function getAllOrders(status?: 'pending' | 'approved' | 'preparing' | 'completed' | 'cancelled') {
-  return await db.select({
+export async function getAllOrders(params: {
+  page?: number;
+  pageSize?: number;
+  orderBy?: string;
+  isAscending?: boolean;
+  querySearch?: string;
+}, status?: 'pending' | 'approved' | 'preparing' | 'completed' | 'cancelled') {
+  const { page = 1, pageSize = 10 } = params;
+  const offset = (page - 1) * pageSize;
+
+  console.log(status);
+
+  const results = await db.select({
     id: orders.id,
     mejaId: orders.mejaId,
     paymentMethod: orders.paymentMethod,
+    customerName: orders.customerName,
     status: orders.status,
+    totalPrice: orders.totalPrice,
     updatedAt: orders.updatedAt,
     createdAt: orders.createdAt,
-  }).from(orders).where(status ? eq(orders.status, status) : undefined);
+  }).from(orders).where(status ? eq(orders.status, status) : undefined).limit(pageSize).offset(offset);
+
+  const countResult = await db.select({ count: count() }).from(orders);
+  const countData = countResult[0]?.count ?? 0;
+
+  return {
+    data: results,
+    pagination: {
+      page,
+      pageSize,
+      totalData: Number(countData),
+      totalPage: Math.ceil(Number(countData) / pageSize),
+    },
+  };
 }
 
 export async function getOrderById(id: string) {
@@ -32,6 +58,28 @@ export async function getOrderById(id: string) {
     createdAt: orders.createdAt,
   }).from(orders).where(eq(orders.id, id)).limit(1);
   return order;
+}
+
+export async function updateStatus(status: 'pending' | 'approved' | 'preparing' | 'completed' | 'cancelled' | undefined, routeId: string) {
+  const [updatedOrder] = await db.update(orders).set({
+    status,
+    updatedAt: new Date(),
+  }).where(eq(orders.id, routeId)).returning({
+    id: orders.id,
+    mejaId: orders.mejaId,
+    customerName: orders.customerName,
+    customerEmail: orders.customerEmail,
+    paymentMethod: orders.paymentMethod,
+    status: orders.status,
+    totalPrice: orders.totalPrice,
+    updatedAt: orders.updatedAt,
+    createdAt: orders.createdAt,
+  });
+
+  if (!updatedOrder)
+    throw new Error('Failed to update order status');
+
+  return updatedOrder;
 }
 
 export async function addOrder(data: NewOrder) {

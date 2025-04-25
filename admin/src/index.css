@@ -1,0 +1,281 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://rsms.me/inter/inter.css');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+@layer base {
+  :root {
+    /* Default theme (petugas-tps) */
+    --background: 210 40% 98%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    --primary: 210 100% 50%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222 47% 11%;
+
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+
+    --accent: 210 40% 96%;
+    --accent-foreground: 222 47% 11%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --success: 142 76% 36%;
+    --success-foreground: 210 40% 98%;
+
+    --warning: 38 92% 50%;
+    --warning-foreground: 210 40% 98%;
+
+    --info: 200 98% 39%;
+    --info-foreground: 210 40% 98%;
+
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 222 47% 11%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 222 47% 11%;
+    --sidebar-primary: 210 100% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 210 40% 96%;
+    --sidebar-accent-foreground: 222 47% 11%;
+    --sidebar-border: 214 32% 91%;
+    --sidebar-ring: 222 47% 11%;
+  }
+
+  /* Superadmin theme with primary color #20D3C4 (around 174 65% 48% in HSL) */
+  [data-role="superadmin"] {
+    --primary: 174 65% 48%;
+    --primary-foreground: 210 40% 98%;
+    
+    --sidebar-primary: 174 65% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    
+    /* Slight adjustments to secondary and accent colors to complement the teal primary */
+    --secondary: 174 40% 96%;
+    --accent: 174 40% 96%;
+  }
+
+  .dark {
+    --background: 222 47% 11%;
+    --foreground: 210 40% 98%;
+
+    --card: 222 47% 11%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 100% 50%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 217 33% 17%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --success: 142 76% 36%;
+    --success-foreground: 210 40% 98%;
+
+    --warning: 38 92% 50%;
+    --warning-foreground: 210 40% 98%;
+
+    --info: 200 98% 39%;
+    --info-foreground: 210 40% 98%;
+
+    --border: 217 33% 17%;
+    --input: 217 33% 17%;
+    --ring: 212 27% 84%;
+
+    --sidebar-background: 223 47% 13%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 210 100% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 217 33% 17%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 217 33% 17%;
+    --sidebar-ring: 212 27% 84%;
+  }
+
+  /* Dark mode for superadmin */
+  .dark[data-role="superadmin"] {
+    --primary: 174 65% 48%;
+    --primary-foreground: 210 40% 98%;
+    
+    --sidebar-primary: 174 65% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    
+    /* Adjusted dark mode secondary and accent for teal */
+    --secondary: 174 33% 17%;
+    --accent: 174 33% 17%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-medium tracking-tight;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-white/20 dark:border-slate-700/20 rounded-lg shadow-glass;
+  }
+  
+  .glass-panel-sm {
+    @apply bg-white/70 dark:bg-slate-900/70 backdrop-blur-sm border border-white/10 dark:border-slate-700/10 rounded-md shadow-glass-sm;
+  }
+  
+  .nav-link {
+    @apply flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-secondary transition-all duration-200;
+  }
+  
+  .nav-link.active {
+    @apply text-primary bg-primary/10;
+  }
+  
+  .dashboard-card {
+    @apply p-6 rounded-xl border border-border bg-card text-card-foreground shadow-subtle transition-all duration-300 hover:shadow-glass-sm;
+  }
+  
+  .stat-card {
+    @apply flex flex-col p-6 rounded-xl border border-border bg-card text-card-foreground shadow-subtle;
+  }
+  
+  .table-base {
+    @apply w-full text-sm text-left text-foreground;
+  }
+  
+  .table-base thead {
+    @apply text-xs uppercase text-muted-foreground bg-secondary;
+  }
+  
+  .table-base th {
+    @apply px-4 py-3 font-medium;
+  }
+  
+  .table-base td {
+    @apply px-4 py-3 border-t border-border;
+  }
+  
+  .form-input {
+    @apply px-3 py-2 rounded-md border border-input bg-background text-foreground shadow-sm focus:outline-none focus:ring-1 focus:ring-primary;
+  }
+  
+  .chip {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+  
+  .chip-primary {
+    @apply bg-primary/20 text-primary;
+  }
+  
+  .chip-success {
+    @apply bg-success/20 text-success;
+  }
+  
+  .chip-warning {
+    @apply bg-warning/20 text-warning;
+  }
+  
+  .chip-info {
+    @apply bg-info/20 text-info;
+  }
+  
+  .chip-destructive {
+    @apply bg-destructive/20 text-destructive;
+  }
+}
+
+/* Animation utilities */
+.animate-in {
+  animation-name: fade-in, slide-in;
+  animation-duration: 0.3s, 0.4s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: both;
+}
+
+.animate-delay-100 {
+  animation-delay: 0.1s;
+}
+
+.animate-delay-200 {
+  animation-delay: 0.2s;
+}
+
+.animate-delay-300 {
+  animation-delay: 0.3s;
+}
+
+/* Transitions */
+.page-transition-enter {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.page-transition-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.page-transition-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page-transition-exit-active {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground) / 0.3);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground) / 0.5);
+}

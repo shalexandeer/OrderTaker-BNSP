@@ -32,11 +32,12 @@ const Welcome = memo(() => {
     setIsVisible(false);
   });
 
-  useEffect(() => {
-    if (user == null || mejaData == null || restaurantProfile == null) {
-      window.location.replace("/");
-    }
-  }, [restaurantProfile, mejaData, user]);
+  // useEffect(() => {
+  //   if (user == null || mejaData == null || restaurantProfile == null) {
+  //     window.location.replace("/");
+  //   }
+  // }, [restaurantProfile, mejaData, user]);
+
   if (!isVisible) return null;
 
   return (
