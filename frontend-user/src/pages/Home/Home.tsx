@@ -16,6 +16,7 @@ import { useGetFoods, useSearchFoods } from "../../services/foods/foods.query";
 import { useGetFoodCategories } from "../../services/category/category.query";
 import SearchItem from "./components/SearchItem";
 import useDebounce from "../../hooks/useDebounce"; // Import your useDebounce hook
+import { Food } from "../../interface/global";
 
 const Home: React.FC = memo(() => {
   const { dark } = useSelector((state: RootState) => state.ui);
@@ -53,11 +54,6 @@ const Home: React.FC = memo(() => {
     isFetching: isFetchingFoods,
     isError: errorFoods,
   } = useGetFoods(selectedCategory!);
-
-  const { data: searchFoodsData, isFetching: isFetchingSearchFood } =
-    useSearchFoods({
-      search: debouncedSearchText,
-    });
 
   const {
     data: category,
@@ -101,13 +97,15 @@ const Home: React.FC = memo(() => {
         />
         <div className={`px-5 ${isSearching ? "fade-in px-5" : "hidden"}`}>
           <SearchItem
-            searchData={searchFoodsData}
+            searchData={foodsData?.filter((item: Food) =>
+              item.name.includes(debouncedSearchText),
+            )}
             searchText={debouncedSearchText}
           />
         </div>
         {!isSearching ? (
           <>
-            {isFetchingFoods || isFetchingSearchFood || isFetchingCategories ? (
+            {isFetchingFoods || isFetchingCategories ? (
               <div className="flex items-center justify-center">
                 <IonSpinner name="crescent" />
               </div>

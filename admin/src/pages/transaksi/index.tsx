@@ -23,6 +23,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useUpdateOrderMutation } from "@/services/order/mutations";
+import { useEffect } from "react";
 
 type OrderStatus =
   | "pending"
@@ -49,6 +50,8 @@ const OrdersListPage = () => {
       pageSize: pageSize.toString(),
     });
   };
+
+  useEffect(() => {}, []);
 
   return (
     <Card className="pt-6">
@@ -140,6 +143,7 @@ const OrdersListPage = () => {
                   <TableCell>
                     <Select
                       defaultValue={order.status}
+                      value={order.status}
                       onValueChange={(value) => {
                         updateOrderStatus.mutate({
                           id: order.id,

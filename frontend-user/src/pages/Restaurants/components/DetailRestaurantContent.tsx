@@ -12,7 +12,7 @@ import { useState } from "react";
 import { RootState, useTypedDispatch } from "../../../stores";
 import { useParams } from "react-router";
 import { ParamsId } from "../pages/RestaurantsDetailPage";
-import { BASE_URL } from "../../../services/url";
+import { BASE_URL, BASE_URL_IMG } from "../../../services/url";
 import { Additional, Food, FoodCart } from "../../../interface/global";
 import { updateNotes } from "../../../stores/cart/cart";
 
@@ -60,7 +60,7 @@ const DetailRestaurantContent = ({
     <>
       <IonContent>
         <div className="mt-4 space-y-6 px-5">
-          <DetailPageImage imageUrl={`${BASE_URL}/files/${img}`} />
+          <DetailPageImage imageUrl={`${BASE_URL_IMG}/${img}`} />
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <h1 className="text-xl font-bold">{name}</h1>

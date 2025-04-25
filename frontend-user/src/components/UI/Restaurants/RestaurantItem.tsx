@@ -1,5 +1,5 @@
 import { IonImg } from "@ionic/react";
-import { BASE_URL } from "../../../services/url";
+import { BASE_URL, BASE_URL_IMG } from "../../../services/url";
 import { formatPrice } from "../../../utils/string";
 import { Food } from "../../../interface/global";
 
@@ -23,7 +23,7 @@ const RestaurantItem: React.FC<RestaurantItemProps> = ({ menu, onClick }) => {
     >
       <div className="relative">
         <IonImg
-          src={`${BASE_URL}/files/${img}`}
+          src={`${BASE_URL_IMG}/${img}`}
           className="h-[72px] w-[72px] border border-[--ion-stroke-color]"
           style={{
             objectFit: "cover",

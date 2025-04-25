@@ -10,7 +10,7 @@ interface Props {
 }
 
 const variants = {
-  active: "bg-[#FFF7F2] text-[#3dc2ff] text-[--ion-color-primary] ",
+  active: "bg-[#FFF7F2] text-[#3dc2ff] ",
   unActive: "bg-[--ion-item-bg]  border border-[#E9EBEE] text-[#C1C1C1] ",
 };
 

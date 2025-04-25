@@ -19,7 +19,7 @@ export const useUpdateOrderMutation = () => {
       return response.data.data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: orderKeys.lists() });
+      queryClient.invalidateQueries({ queryKey: [...orderKeys.lists()] });
       toast.success("Order updated successfully!");
     },
   });

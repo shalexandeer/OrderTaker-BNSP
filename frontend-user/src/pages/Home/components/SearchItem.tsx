@@ -1,34 +1,9 @@
 import { IonImg, useIonRouter } from "@ionic/react";
-import { BASE_URL } from "../../../services/url";
-
-interface FoodCategorySearch {
-  id: number;
-  hotelId: number;
-  name: string;
-  img: string;
-  createdAt: string;
-  updatedAt: string;
-  deletedAt: string | null;
-}
-
-interface FoodItemSearch {
-  id: number;
-  categoryId: number;
-  foodCategory: FoodCategorySearch;
-  name: string;
-  description: string;
-  img: string;
-  price: number;
-  availability: boolean;
-  stock: number;
-  favorite: number;
-  createdAt: string;
-  updatedAt: string;
-  deletedAt: string | null;
-}
+import { BASE_URL_IMG } from "../../../services/url";
+import { Food } from "../../../interface/global";
 
 interface SearchItemProps {
-  searchData: FoodItemSearch[];
+  searchData: Food[];
   searchText: string;
 }
 
@@ -55,7 +30,7 @@ const SearchItem = ({ searchData, searchText }: SearchItemProps) => {
               className="relative min-h-[120px] w-full overflow-hidden rounded-xl border border-[--ion-stroke-color]"
             >
               <IonImg
-                src={`${BASE_URL}/files/${img}`}
+                src={`${BASE_URL_IMG}/${img}`}
                 className="absolute inset-0 h-full w-full rounded-xl object-cover"
               />
             </div>
