@@ -57,7 +57,7 @@ function Login() {
       {
         onSuccess: (_) => {
           toast.success("Berhasil Login");
-          window.location.href = redirect || "/dashboard";
+          window.location.href = redirect || "/orders";
         },
         onError: (error: AxiosError<ApiResponse<boolean>>) => {
           toast.error(error.response?.data.message);
@@ -68,7 +68,7 @@ function Login() {
 
   useEffect(() => {
     if (localStorage.getItem("access_token")) {
-      window.location.href = redirect || "/dashboard";
+      window.location.href = redirect || "/orders";
       return;
     }
   }, [redirect]);

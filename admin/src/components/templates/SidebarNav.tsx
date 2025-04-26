@@ -30,11 +30,6 @@ export function SidebarNav({ open, setOpen, isMobile }: SidebarNavProps) {
 
   const navItems = [
     {
-      title: "Dashboard",
-      href: "/dashboard",
-      icon: LayoutDashboard,
-    },
-    {
       title: "Pesanan",
       href: "/orders",
       icon: ListCheckIcon,
@@ -49,11 +44,6 @@ export function SidebarNav({ open, setOpen, isMobile }: SidebarNavProps) {
       href: "/meja",
       icon: Table,
     },
-    // {
-    //   title: "Pengaturan",
-    //   href: "/settings",
-    //   icon: Settings,
-    // },
   ];
 
   // Track opened submenu
@@ -218,6 +208,7 @@ export function SidebarNav({ open, setOpen, isMobile }: SidebarNavProps) {
             onClick={() => {
               navigate("/login");
               logout();
+              localStorage.removeItem("access_token");
             }}
             className="nav-link w-full text-left text-destructive hover:bg-destructive/10"
           >
